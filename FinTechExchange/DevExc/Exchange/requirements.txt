@@ -1,2 +1,5 @@
 Django==2.0
 pytz==2018.4
+numpy=2.0
+
+
