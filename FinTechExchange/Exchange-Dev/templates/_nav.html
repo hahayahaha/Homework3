@@ -1,0 +1,55 @@
+<div class="container-fluid top-navbar">
+    <nav class="navbar navbar-default mobile-navbar" role="navigation">
+        <div class="row general-row">
+            <div class="container-fluid navbar-width">
+                <div class="navbar-header logo">
+                    <button type="button" class="navbar-toggle collapsed col-xs-4" data-toggle="collapse"
+                            data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">
+                        FinX
+                    </a>
+                </div>
+
+                <div id="navbar" class="collapse navbar-collapse" aria-expanded="false">
+                    <ul class="nav navbar-nav navbar-left navbar-main-link">
+                        <li>
+                            <a id="index"
+                               href="{% url 'trade:trade-index' %}">
+                                 首页 
+                            </a></li>
+
+
+                        <li>
+                            <a id="exchange-link" href="{% url 'trade:trade-stock' 1001 %}">
+                                交易
+                            </a></li>
+
+                        <div class="show-in-mobile">
+                            <a class="sub-link home-link mobile-padding"
+                               href="#">交易中心</a>
+
+                        </div>
+
+
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+
+
+                        <li class="sign-up-li">
+                            <a class="log-in-btn" href="{% url 'user:login' %}">登录</a>
+                        </li>
+                        <li class="sign-up-li"><a class="sign-up-btn" href="{% url 'user:signup' %}">注册</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+</div>

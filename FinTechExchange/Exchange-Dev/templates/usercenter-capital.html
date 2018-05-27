@@ -1,0 +1,43 @@
+{% extends 'usercenter-base.html' %}
+{% load staticfiles %}
+{% block title %} 个人信息 | exchangeNJU{% endblock %}
+
+{% block custom_bread %}
+        <section>
+        <div class="wp">
+            <ul  class="crumbs">
+                <li><a href="{% url 'index' %}">首页</a>></li>
+                <li><a href="{% url 'user:user_info' %}">个人中心</a>></li>
+                <li>我的资产</li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}
+
+{% block right_content %}
+    <div class="right" >
+		<div class="personal_des Releasecont">
+			<div class="head">
+				<h1>我的资产</h1>
+			</div>
+		</div>
+		<div class="personal_des permessage">
+			<div class="companycenter">
+				<div class="group_list brief">
+
+                    <!{% for user_capital in user_capitals %}>
+                    <div class="module1_5 box">
+                            <div class="des">
+                                <a><h2><!股票的名字{{ user_capital.capital.name }}></h2></a>
+                                <span class="fl">持有数量：<i class="key"><!{{ user_capital.amount }}></i></span>
+                                <span class="fr">当前价格：<!{{ user_capital.price }}></span>
+                            </div>
+                    </div>
+<!{% endfor %}>
+                    
+
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

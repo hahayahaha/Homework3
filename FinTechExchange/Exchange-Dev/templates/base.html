@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Exchange</title>
+    <link rel="shortcut icon" href="https://bb.otcbtc.com/images/otcbtc.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/trade.css'%} ">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script>
+        $.getJSON(
+            'http://127.0.0.1:8001/trade/1001/chart_data/',
+            function (data) {
+
+                Highcharts.chart('container', {
+                    chart: {
+                        zoomType: 'x'
+                    },
+                    title: {
+                        text: 'stockI price over time'
+                    },
+                    subtitle: {
+                        text: document.ontouchstart === undefined ?
+                            'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+                    },
+                    xAxis: {
+                        type: 'datetime'
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Price'
+                        }
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        area: {
+                            fillColor: {
+                                linearGradient: {
+                                    x1: 0,
+                                    y1: 0,
+                                    x2: 0,
+                                    y2: 1
+                                },
+                                stops: [
+                                    [0, Highcharts.getOptions().colors[0]],
+                                    [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                                ]
+                            },
+                            marker: {
+                                radius: 2
+                            },
+                            lineWidth: 1,
+                            states: {
+                                hover: {
+                                    lineWidth: 1
+                                }
+                            },
+                            threshold: null
+                        }
+                    },
+
+                    series: [{
+                        type: 'area',
+                        name: 'Price',
+                        data: data
+                    }]
+                });
+            }
+        );
+    </script>
+    {#    <link rel="stylesheet" media="all"#}
+    {#          href="trade_files/market-wrap-65e16cd8edbdcb5a560013d858816610113b12dc0558ea63.css">#}
+
+    {#        <script src="trade_files/market-559decfc7837330ad1a2c554e0f4464a410108dff0e4e64cb23182.js"></script>#}
+    {#    <script src="trade_files/charting_library.js"></script>#}
+    {#    <script src="trade_files/datafeed.js"></script>#}
+    {#        <script src="trade_files/beta_exchange-f7136904870a3637bbd0.js"></script>#}
+
+    <style type="text/css" data-glamor=""></style>
+</head>
+
+<body>
+<div class="container-fluid top-navbar exchange-navbar">
+    <nav class="navbar navbar-default mobile-navbar" role="navigation">
+        <div class="row general-row">
+            <div class="container-fluid navbar-width">
+                <div class="navbar-header logo">
+                    <button type="button" class="navbar-toggle collapsed col-xs-4" data-toggle="collapse"
+                            data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="https://bb.otcbtc.com/">
+                        FinX
+                    </a>
+                </div>
+
+                <div id="navbar" class="collapse navbar-collapse" aria-expanded="false">
+                    <ul class="nav navbar-nav navbar-left navbar-main-link">
+                        <li>
+                            <a id="otc-link"
+                               href="https://otcbtc.com/sell_offers?currency=btc&amp;fiat_currency=cny&amp;payment_type=all">
+                                exchange
+                                OTC
+                            </a></li>
+
+                        <li>
+                            <a id="exchange-link" href="https://bb.otcbtc.com/exchange/markets">
+                                Exchange
+                            </a></li>
+
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="sign-up-li">
+                            <a class="log-in-btn" href="https://otcbtc.com/sign_in?redirect_to=exchange">Login</a>
+                        </li>
+                        <li class="sign-up-li"><a class="sign-up-btn"
+                                                  href="https://otcbtc.com/sign_up?redirect_to=exchange">Register</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+</div>
+
+
+<div data-react-class="index" data-react-props="{}">
+    <div class="container-fluid exchange-container">
+        <div class="row">
+            <div class="app">
+                <div></div>
+                <div class="col-xs-24 col-md-24">
+                    <div class="row top-space">
+                        <div class="col-xs-24 col-sm-24 col-md-17 right-space">
+                            <div class="market-info panel panel-default">
+                                <div class="row market-ticker">
+                                    <div class="col-xs-24 col-sm-5 market-ticker__symbol"><p
+                                            class="market-ticker__symbol-desktop"><span
+                                            class="market-name">{{ current_stock.name }}</span><span class="currency-description"><a
+                                            href="https://otcbtc.zendesk.com/hc/articles/115002848692"
+                                            target="_blank" rel="noopener noreferrer"><i class="fa fa-book"
+                                                                                         aria-hidden="true"></i>Intro</a></span>
+                                    </p>
+                                        <p class="market-ticker__symbol-mobile">{{ current_stock.name }}<i class="fa fa-sort-down"
+                                                                                                           aria-hidden="true"></i>
+                                        </p>
+                                        <p class="start-mobile"></p></div>
+                                    <div class="col-xs-12 col-sm-4 ticker-last">
+                                        <p class="market-ticker__title">Last Price</p>
+                                        <p class="market-ticker__content">
+                                            <span class="main-price">
+                                                <span class="text-up">{{ current_stock.price }}</span>
+                                            </span>
+                                            <span class="market-ticker__content--graysmall">
+                                                <span class="fiat-currency">≈ <i class="fa fa-usd"></i>7532.68
+                                                </span>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="sub-info">
+                                        <div class="col-xs-12 col-sm-2 ticker-change">
+                                            <p class="market-ticker__title">24h Change</p>
+                                            <p class="market-ticker__content text-down">-1.61%</p>
+                                        </div>
+                                        <div class="price-content">
+                                            <div class="price-info">
+                                                <div class="col-xs-12 col-sm-4 ticker-high">
+                                                    <p class="market-ticker__title">24h High</p>
+                                                    <p class="market-ticker__content">
+                                                        <span class="">12.88700319</span>
+                                                    </p>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-4 ticker-low">
+                                                    <p class="market-ticker__title">24h Low</p>
+                                                    <p class="market-ticker__content">
+                                                        <span class="">12.20004150</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-5 ticker-volume">
+                                            <p class="market-ticker__title">24h Volume</p>
+                                            <p class="market-ticker__content">
+                                                <span class="">131.01080626</span>
+                                                <span class="market-ticker__content--gray mobile-nuit"> BTC</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="candlestick">
+                                    <div id="tv_chart_container" class="candlestick__chart-container">
+                                        <div id="container" style="min-width: 310px; height: 300px; margin: 0 auto"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-24 col-sm-24 col-md-7 left-space market-tickers-space">
+                            <div class="panel panel-default market-tickers market-hidden-event">
+                                <div class="market-tickers__mobile-title">
+                                    <span class="close-icon"><i class="fa fa-angle-left"></i></span>
+                                    <span class="title">Markets</span>
+                                </div>
+                                <div class="panel-heading" id="tickers-heading">
+                                    <div class="panel-heading__left">
+                                        <button type="button" class="favorite-select-btn"><i class="fa fa-star"></i>Favorites
+                                        </button>
+                                        <button type="button" class="quote-unit-select-btn active-quote-unit">ETH</button>
+                                        <button type="button" class="quote-unit-select-btn null">BTC</button>
+                                    </div>
+                                    <div class="panel-heading__right search-bar">
+                                        <input class="form-control market-tickers__input" type="text">
+                                        <i class="fa fa-search search-icon"></i>
+                                    </div>
+                                </div>
+                                <ul class="general-flex-list markets-lists">
+                                    <li class="markets-item markets-lists-header">
+                                        <span class="width-35">Pair</span><span class="width-45">Price</span><span class="width-20 text-right">CHG</span>
+                                    </li>
+                                    <div class="scroll-block scroll-block__markets" id="market-tickers-div">
+                                        {% for stock in stocks %}
+                                            <li class="markets-item {% if current_stock.id == stock.id %}current-market{% endif %}" id="market-btceth">
+                                                <span class="width-5"></span>
+                                                <a href="https://bb.otcbtc.com/exchange/markets/btceth?tag=eth">
+                                                <span class="width-30">
+                                                    <span class="base-unit">{{ stock.name }}</span><span class="grey"> / ETH</span>
+                                                </span>
+                                                    <span class="width-45">
+                                                    <span class="price">
+                                                        <span class="">{{ stock.price }}</span>
+                                                    </span>
+                                                    <span class="grey fiat-currency">
+                                                        <span class="hidden-xs"> / </span><span><i class="fa fa-usd"></i> 7532.68</span>
+                                                    </span>
+                                                </span>
+                                                    <span class="width-20 text-right">
+                                                    <span class="text-down">-1.61%</span>
+                                                </span>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                        <li class="markets-item hoverable" id="market-eoseth">
+                                            <span class="width-5"></span>
+                                            <a href="https://bb.otcbtc.com/exchange/markets/eoseth?tag=eth">
+                                                <span class="width-30">
+                                                    <span class="base-unit">EOS</span>
+                                                    <span class="grey"> / ETH</span>
+                                                </span>
+                                                <span class="width-45">
+                                                    <span class="price">
+                                                        <span class="">0.02098124</span>
+                                                    </span>
+                                                    <span class="grey fiat-currency">
+                                                        <span class="hidden-xs"> / </span>
+                                                        <span><i class="fa fa-usd"></i> 12.67</span>
+                                                    </span>
+                                                </span>
+                                                <span class="width-20 text-right">
+                                                    <span class="text-up">1.06%</span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="end-item">——— End ———</li>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-24 col-md-12 right-space">
+                            <div class="order-book panel panel-default">
+                                <div class="bid-book">
+                                    <div class="panel inner-panel">
+                                        <div class="panel-heading">
+                                            <span class="panel-heading__left panel-title heading-space">Buy Orders</span>
+                                        </div>
+                                        <div class="panel-body right-line">
+                                            <ul class="general-flex-list order-header">
+                                                <li class="order-item">
+                                                    <span class="width-25">Price</span>
+                                                    <span class="width-38 text-right">Amount({{ current_stock.name }})</span>
+                                                    <span class="width-auto text-right">Total</span></li>
+                                            </ul>
+                                            <ul class="general-flex-list order-items">
+                                                {% for order in buy_orders %}
+                                                    <li class="order-item hoverable">
+                                                        <i class="hidden fa fa-caret-left" aria-hidden="true"></i>
+                                                        <span class="width-25">
+                                                        <span class="text-up">{{ order.price }}</span>
+                                                    </span>
+                                                        <span class="width-38 text-right">{{ order.qty }}</span>
+                                                        <span class="width-auto text-right">
+                                                        <span class="">{% widthratio order.price 1 order.qty %}</span>
+                                                    </span>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ask-book">
+                                    <div class="panel inner-panel">
+                                        <div class="panel-heading"><span
+                                                class="panel-heading__left panel-title heading-space">Sell Orders</span>
+                                        </div>
+                                        <div class="panel-body left-line">
+                                            <ul class="general-flex-list order-header">
+                                                <li class="order-item">
+                                                    <span class="width-25">Price({{ current_stock.name }})</span>
+                                                    <span class="width-38 text-right">Amount({{ current_stock.name }})</span>
+                                                    <span class="width-auto text-right">Total</span>
+                                                </li>
+                                            </ul>
+                                            <ul class="general-flex-list order-items">
+                                                {% for order in sell_orders %}
+                                                    <li class="order-item hoverable">
+                                                        <i class="hidden fa fa-caret-right" aria-hidden="true"></i>
+                                                        <span class="width-25">
+                                                        <span class="text-down">{{ order.price }}</span>
+                                                    </span>
+                                                        <span class="width-38 text-right">{{ order.qty }}</span>
+                                                        <span class="width-auto text-right">
+                                                        <span class="">{% widthratio order.price 1 order.qty %}</span>
+                                                    </span>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-24 col-md-12 left-space mobile-order-form">
+                            <div class="order-form panel panel-default">
+                                <div class="panel inner-panel order-form__part order-form-bid">
+                                    <div class="panel-heading form-heading">
+                                        <span class="panel-heading__left panel-title heading-space heading-bid">Buy BTC</span>
+                                        <span class="panel-heading__right balance">ETH1
+                                            <span class="unit">Balance:</span>0
+                                        </span>
+                                    </div>
+                                    <div class="panel-body">
+                                        <form class="form-horizontal" role="form" action="{% url 'trade:buy' current_stock.stock_code %}" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="next" value="{{ request.path }}">
+                                            <div class="form-group custom-input-group price-input">
+                                                <div class="input-group main-line">
+                                                    <input step="any"
+                                                           autocomplete="off"
+                                                           name="price"
+                                                           data-precision="8"
+                                                           value="{{ current_stock.price }}"
+                                                           class="order-form__input form-control text-right"
+                                                           type="text">
+                                                    <span class="order-form__text order-form__text--left">Price</span>
+                                                    <span class="order-form__text order-form__text--right">ETH</span>
+                                                </div>
+                                                <div class="sub-line">
+                                                </div>
+                                            </div>
+                                            <div class="form-group custom-input-group">
+                                                <div class="input-group main-line ">
+                                                    <input step="any"
+                                                           autocomplete="off"
+                                                           name="qty"
+                                                           data-precision="8"
+                                                           class="order-form__input form-control text-right"
+                                                           type="text">
+                                                    <span class="order-form__text order-form__text--left">Amount</span>
+                                                    <span class="order-form__text order-form__text--right">BTC</span>
+                                                </div>
+                                            </div>
+                                            <div class="percentage-wrap">
+                                                <span class="percentage-btn">25%</span>
+                                                <span class="percentage-btn">50%</span>
+                                                <span class="percentage-btn">75%</span>
+                                                <span class="percentage-btn">100%</span>
+                                            </div>
+                                            <div class="form-group custom-input-group">
+                                                <div class="input-group main-line ">
+                                                    <input step="any"
+                                                           autocomplete="off"
+                                                           name="orderTotal"
+                                                           value="0"
+                                                           class="order-form__input form-control text-right"
+                                                           type="text">
+                                                    <span class="order-form__text order-form__text--left">Total</span>
+                                                    <span class="order-form__text order-form__text--right">ETH</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-error-block"></div>
+                                            <div class="form-group main-btn-group">
+                                                {% if request.user.is_authenticated %}
+                                                    <button class="btn btn-primary btn-block btn-bid" type="submit">buy</button>
+                                                {% else %}
+                                                    <a class="btn btn-primary btn-block btn-bid" href="https://otcbtc.com/sign_in?redirect_to=exchange"> Login </a>
+                                                {% endif %}
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="panel inner-panel order-form__part order-form-ask">
+                                    <div class="panel-heading form-heading">
+                                        <span class="panel-heading__left panel-title heading-space heading-ask">Sell BTC</span>
+                                        <span class="panel-heading__right balance">BTC
+                                            <span class="unit">Balance:</span>0
+                                        </span>
+                                    </div>
+                                    <div class="panel-body">
+                                        <form class="form-horizontal" role="form" action="{% url 'trade:sell' current_stock.stock_code %}" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="next" value="{{ request.path }}">
+                                            <div class="form-group custom-input-group price-input">
+                                                <div class="input-group main-line">
+                                                    <input step="any"
+                                                           autocomplete="off"
+                                                           name="price"
+                                                           data-precision="8"
+                                                           value="{{ current_stock.price }}"
+                                                           class="order-form__input form-control text-right"
+                                                           type="text">
+                                                    <span class="order-form__text order-form__text--left">Price</span>
+                                                    <span class="order-form__text order-form__text--right">ETH</span>
+                                                </div>
+                                                <div class="sub-line">
+                                                </div>
+                                            </div>
+                                            <div class="form-group custom-input-group">
+                                                <div class="input-group main-line ">
+                                                    <input step="any"
+                                                           autocomplete="off"
+                                                           name="qty"
+                                                           data-precision="8"
+                                                           class="order-form__input form-control text-right"
+                                                           type="text">
+                                                    <span class="order-form__text order-form__text--left">Amount</span>
+                                                    <span class="order-form__text order-form__text--right">BTC</span>
+                                                </div>
+                                            </div>
+                                            <div class="percentage-wrap">
+                                                <span class="percentage-btn">25%</span>
+                                                <span class="percentage-btn">50%</span>
+                                                <span class="percentage-btn">75%</span>
+                                                <span class="percentage-btn">100%</span>
+                                            </div>
+                                            <div class="form-group custom-input-group">
+                                                <div class="input-group main-line ">
+                                                    <input step="any"
+                                                           autocomplete="off"
+                                                           name="orderTotal"
+                                                           value="0"
+                                                           class="order-form__input form-control text-right"
+                                                           type="text">
+                                                    <span class="order-form__text order-form__text--left">Total</span>
+                                                    <span class="order-form__text order-form__text--right">ETH</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-error-block"></div>
+                                            <div class="form-group main-btn-group">
+                                                {% if request.user.is_authenticated %}
+                                                    <button class="btn btn-primary btn-block btn-ask" type="submit">sell</button>
+                                                {% else %}
+                                                    <a class="btn btn-primary btn-block btn-ask" href="https://otcbtc.com/sign_in?redirect_to=exchange"> Login </a>
+                                                {% endif %}
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bottom-space">
+                        <div class="col-xs-24 col-md-6 right-space">
+                            <div class="trades panel panel-default">
+                                <div class="panel-heading">
+                                    <span class="panel-heading__left panel-title">Trade History</span>
+                                    <span class="panel-heading__right">
+                                        <a class="default-link" href="https://bb.otcbtc.com/exchange/trades" target="_blank">My Trades</a>
+                                    </span>
+                                </div>
+                                <div class="panel-body trade-history">
+                                    <ul class="general-flex-list trade-item order-header">
+                                        <li class="trade-item">
+                                            <span class="width-30">Time</span>
+                                            <span class="width-30 text-right">Price</span>
+                                            <span class="width-auto text-right">Amount</span></li>
+                                    </ul>
+                                    <ul class="general-flex-list trade-items">
+                                        {% for order in trade_history %}
+                                            <li class="trade-item"><span class="width-30">{{ order.transaction_time }}</span>
+                                                <span class="width-30 text-right">
+                                                <span class="text-up">{{ order.price }}</span>
+                                            </span>
+                                                <span class="width-auto text-right">
+                                                <span class="">{{ order.qty }}</span>
+                                            </span>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-24 col-md-18 left-space">
+                            <div class="my-orders panel panel-default">
+                                <div class="empty-row">You have no open orders</div>
+                                <div class="panel-heading">
+                                    <span class="panel-heading__left panel-title">Open Orders</span>
+                                    <span class="panel-heading__right"><span class="hide-other-markets">
+                                        <input value="on" type="checkbox"> Hide other markets</span>
+                                        <a class="default-link"
+                                           href="#"
+                                           data-confirm="Are you sure you want to cancel all open orders?">Cancel All
+                                        </a>
+                                    </span>
+                                </div>
+                                <div class="panel-body user-orders-history">
+                                    <ul class="hidden-xs general-flex-list order-header">
+                                        <li class="my-order-item history-header">
+                                            <span class="my-order-item__timestamp">Date</span>
+                                            <span class="my-order-item__market">Market</span>
+                                            <span class="my-order-item__type text-center">Side</span>
+                                            <span class="my-order-item__price text-right">Price(ETH)</span>
+                                            <span class="my-order-item__amount text-right">Amount(BTC)</span>
+                                            <span class="my-order-item__percentage text-right">Filled %</span>
+                                            <span class="my-order-item__total text-right">Total(ETH)</span>
+                                            <span class="my-order-item__actions text-right"></span>
+                                        </li>
+                                    </ul>
+                                    <ul class="general-flex-list scroll-block history-lists"></ul>
+                                </div>
+                            </div>
+                            <div class="order-history__container panel panel-default">
+                                <div class="empty-row">You have no order history</div>
+                                <div class="panel-heading">
+                                    <span class="panel-heading__left panel-title">Recent Order History</span>
+                                    <span class="hidden-xs panel-heading__right">
+                                        <a class="default-link" href="https://bb.otcbtc.com/exchange/orders" target="_blank">More
+                                        </a>
+                                    </span>
+                                </div>
+                                <div class="panel-body recently-orders-history">
+                                    <a class="default-link mobile-history-link" href="https://bb.otcbtc.com/exchange/orders" target="_blank">Click to see
+                                        all history</a>
+                                    <ul class="hidden-xs general-flex-list order-header">
+                                        <li class="order-history__item history-header">
+                                            <span class="order-history__timestamp">Date</span>
+                                            <span class="order-history__market">Market</span>
+                                            <span class="order-history__type text-right">Side</span>
+                                            <span class="order-history__average-price text-right">Avg. Price</span>
+                                            <span class="order-history__price text-right">Price</span>
+                                            <span class="order-history__fullfilled-volume text-right">Filled</span>
+                                            <span class="order-history__origin-volume text-right">Amount</span>
+                                            <span class="order-history__total text-right">Total(ETH)</span>
+                                            <span class="order-history__status text-right">Status</span></li>
+                                    </ul>
+                                    <ul class="hidden-xs general-flex-list scroll-block history-lists"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="footer-container exchange-container">
+        <div class="main-info">
+            <div class="base-intro">
+                <h5>Exchange</h5>
+                <p>Slogan</p>
+            </div>
+            <div class="quick-link">
+                <div class="link-section">
+                    <h5 class="section-header">Support</h5>
+                    <span class="collapse-indicator">x</span>
+                    <ul class="section-content" style="display: block;">
+                        <li><a href="https://otcbtc.com/user_guide#faqs">User Guide</a></li>
+                        <li><a href="https://support.otcbtc.com/hc/en-us/" target="_blank">Help Center</a></li>
+                        <li><a href="https://otcbtc.com/fee">Fees</a></li>
+                        <li><a href="https://otcbtc.com/contact_us">Contact Us</a></li>
+                        <li><a class="add-token-link" data-badge="NEW" href="https://otcbtc.com/listing_application">List
+                            a New Token</a></li>
+                    </ul>
+                </div>
+
+                <div class="link-section">
+                    <h5 class="section-header">About us</h5>
+                    <span class="collapse-indicator">x</span>
+                    <ul class="section-content" style="display: block;">
+                        <li><a href="https://otcbtc.com/company">Company</a></li>
+                        <li><a target="_blank" href="https://otcbtc.releasenotes.io/">Release Notes</a></li>
+                        <li><a href="https://career.otcbtc.com/">Careers</a></li>
+                    </ul>
+                </div>
+
+                <div class="link-section">
+                    <h5 class="section-header">Community</h5>
+                    <span class="collapse-indicator">x</span>
+                    <ul class="section-content" style="display: block;">
+                        <li><a href="https://t.me/otcbtc_en" target="_blank"><i class="fa fa-paper-plane"
+                                                                                aria-hidden="true"></i> Telegram EN</a>
+                        </li>
+                        <li><a href="https://t.me/otcbtc_cn" target="_blank"><i class="fa fa-paper-plane"
+                                                                                aria-hidden="true"></i> Telegram CN</a>
+                        </li>
+                        <li><a href="https://www.reddit.com/r/otcbtc/" target="_blank"><i class="fa fa-reddit-alien"
+                                                                                          aria-hidden="true"></i> Reddit</a>
+                        </li>
+                        <li><a href="https://twitter.com/otcbtc" target="_blank"><i class="fa fa-twitter"
+                                                                                    aria-hidden="true"></i> Twitter</a>
+                        </li>
+                        <li><a href="https://medium.com/otcbtc" target="_blank"><i class="fa fa-medium"
+                                                                                   aria-hidden="true"></i> Medium</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="link-section">
+                    <h5 class="section-header">Resources</h5>
+                    <span class="collapse-indicator">x</span>
+                    <ul class="section-content" style="display: block;">
+                        <li><a href="https://otcbtc.com/app">App Download</a></li>
+                        <li><a href="https://github.com/otcbtc/otcbtc-exchange-api-doc" target="_blank">API Document</a>
+                        </li>
+                        <li><a download="OTCBTC_media_kit"
+                               href="https://bb.otcbtc.com/uploads/OTCBTC_media_kit.zip"><span
+                                class="translation_missing" title="translation missing: en.common.footer.media_kit">Media Kit</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="extend-info">
+            <div class="additional-links">
+                <span class="title">Additional Links:</span>
+                <a class="additional-link" target="_blank" href="https://mytoken.io/">MyToken</a>
+                <a class="additional-link" target="_blank" href="https://www.bitask.org/">币问</a>
+                <a class="additional-link" target="_blank" href="https://www.aicoin.com/">AICoin</a>
+            </div>
+            <div class="currently-online">
+                Users currently online：<span>718</span>
+            </div>
+            <div class="service-info">
+                Service Time：10:00 ~ 22:00 (UTC+08:00)
+            </div>
+        </div>
+        <div class="copyright-info">
+            <a class="link-left" href="https://otcbtc.com/terms_of_service">Terms of Service</a>
+            <a class="link-ritght" href="https://otcbtc.com/privacy">Privacy Policy</a>
+            <p class="company"><span class="short-split-line">|</span>OTCBTC<span class="symbol">©</span>2017-2018</p>
+            <div class="dropup dropup-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-globe"></i>English<b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a rel="nofollow" data-method="patch" href="https://bb.otcbtc.com/locales?locale=zh-CN">简体中文</a>
+                    </li>
+                    <li><a rel="nofollow" data-method="patch" href="https://bb.otcbtc.com/locales?locale=zh-TW">繁體中文</a>
+                    </li>
+                    <li><a rel="nofollow" data-method="patch" href="https://bb.otcbtc.com/locales?locale=en">English</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<span class="cleanslate TridactylStatusIndicator">normal</span></body>
+<iframe class="cleanslate" src="trade_files/commandline.html" id="cmdline_iframe"
+        style="height: 0px !important;"></iframe>
+</html>
