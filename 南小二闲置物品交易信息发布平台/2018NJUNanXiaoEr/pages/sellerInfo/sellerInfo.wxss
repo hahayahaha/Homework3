@@ -1,0 +1,50 @@
+.page{
+    font-family: 'PingFang SC', 'Helvetica Neue', Helvetica, 'Droid Sans Fallback', 'Microsoft Yahei', sans-serif;
+    height: 100%;
+    background: #fff;
+}
+
+.head{
+  height: 300rpx;
+  width: 100%;
+  background-color: #6A005F;
+  padding-top: 50rpx;
+}
+.photo {
+  display: flex;
+  margin: 0 auto;
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;
+  border: 4rpx solid #fff;
+}
+.name{
+  text-align: center;
+  margin-top: 30rpx;
+  color: #fff;
+}
+.text{
+  margin: 30rpx;
+  margin-left: 50rpx;
+  display: flex;
+	flex-direction: row;
+}
+
+.commitBottom {
+    position: fixed;
+    bottom: 10rpx;
+    width: 60%;
+    height: 70rpx;
+    background-color: #6A005F;
+    border-radius: 30px;
+    color: #fff;
+    margin: auto;
+	margin-left: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+.infoList{
+  margin-bottom: 90rpx;
+}
