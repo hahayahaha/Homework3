@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>登录 | FinX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" media="all" href="{% static 'css/login.css' %}">
+</head>
+
+<body class="production devise-namespace sessions-controller new-action">
+<div class="flex-content">
+    {% include '_nav.html' %}
+
+    <div class="common-width">
+        <div class="container devise-box">
+            <div class="row">
+                <div class="col-md-5 left-description">
+                    <h4><img src="login_files/devise-icon-01.png" alt="Devise icon 01">Slogan1</h4>
+                    <p>Slogan1</p>
+
+                    <h4><img src="login_files/devise-icon-02.png" alt="Devise icon 02">Slogan1</h4>
+                    <p>Slogan1</p>
+
+                    <h4><img src="login_files/devise-icon-03.png" alt="Devise icon 03">Slogan1</h4>
+                    <p>Slogan1</p>
+                </div>
+
+                <div class="col-md-7">
+                    <div class="right-input">
+                        <h3>注册</h3>
+                        <div class="input-area">
+                            <form novalidate="novalidate" class="simple_form new_user" id="new_user" action="/sign_in"
+                                  accept-charset="UTF-8" method="post">
+                                <div class="form-group email required user_email"><input
+                                        class="string email optional form-control" autofocus="autofocus"
+                                        placeholder="电子邮箱" value="" name="user[email]"
+                                        id="user_email"
+                                        style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;"
+                                        autocomplete="off" type="email"></div>
+                                <div class="form-group password required user_password"><input
+                                        class="password optional form-control" placeholder="密码" name="user[password]"
+                                        id="user_password"
+                                        style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;"
+                                        autocomplete="off" type="password"></div>
+                                <div class="form-group password required user_password_confirmation"><input
+                                        class="password required form-control" placeholder="确认密码"
+                                        name="user[password_confirmation]" id="user_password_confirmation"
+                                        style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACIUlEQVQ4EX2TOYhTURSG87IMihDsjGghBhFBmHFDHLWwSqcikk4RRKJgk0KL7C8bMpWpZtIqNkEUl1ZCgs0wOo0SxiLMDApWlgOPrH7/5b2QkYwX7jvn/uc//zl3edZ4PPbNGvF4fC4ajR5VrNvt/mo0Gr1ZPOtfgWw2e9Lv9+chX7cs64CS4Oxg3o9GI7tUKv0Q5o1dAiTfCgQCLwnOkfQOu+oSLyJ2A783HA7vIPLGxX0TgVwud4HKn0nc7Pf7N6vV6oZHkkX8FPG3uMfgXC0Wi2vCg/poUKGGcagQI3k7k8mcp5slcGswGDwpl8tfwGJg3xB6Dvey8vz6oH4C3iXcFYjbwiDeo1KafafkC3NjK7iL5ESFGQEUF7Sg+ifZdDp9GnMF/KGmfBdT2HCwZ7TwtrBPC7rQaav6Iv48rqZwg+F+p8hOMBj0IbxfMdMBrW5pAVGV/ztINByENkU0t5BIJEKRSOQ3Aj+Z57iFs1R5NK3EQS6HQqF1zmQdzpFWq3W42WwOTAf1er1PF2USFlC+qxMvFAr3HcexWX+QX6lUvsKpkTyPSEXJkw6MQ4S38Ljdbi8rmM/nY+CvgNcQqdH6U/xrYK9t244jZv6ByUOSiDdIfgBZ12U6dHEHu9TpdIr8F0OP692CtzaW/a6y3y0Wx5kbFHvGuXzkgf0xhKnPzA4UTyaTB8Ph8AvcHi3fnsrZ7Wore02YViqVOrRXXPhfqP8j6MYlawoAAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;"
+                                        type="password"></div>
+                                <div id="captcha-box">
+                                    <div class="geetest_holder geetest_wind geetest_radar_success" style="width: 100%;">
+                                        <div class="geetest_btn">
+                                            <div class="geetest_radar_btn">
+                                                <div class="geetest_radar">
+                                                    <div class="geetest_ring">
+                                                        <div class="geetest_small"></div>
+                                                    </div>
+                                                    <div class="geetest_sector" style="transform: rotate(116.744deg);">
+                                                        <div class="geetest_small"></div>
+                                                    </div>
+                                                    <div class="geetest_cross">
+                                                        <div class="geetest_h"></div>
+                                                        <div class="geetest_v"></div>
+                                                    </div>
+                                                    <div class="geetest_dot"></div>
+                                                    <div class="geetest_scan">
+                                                        <div class="geetest_h"></div>
+                                                    </div>
+                                                    <div class="geetest_status">
+                                                        <div class="geetest_bg"></div>
+                                                        <div class="geetest_hook"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="geetest_wait"><span
+                                                class="geetest_wait_dot geetest_dot_1"></span><span
+                                                class="geetest_wait_dot geetest_dot_2"></span><span
+                                                class="geetest_wait_dot geetest_dot_3"></span></div>
+                                        <div class="geetest_goto" style="display: none;">
+                                            <div class="geetest_goto_ghost"></div>
+                                            <div class="geetest_goto_wrap">
+                                                <div class="geetest_goto_content">
+                                                    <div class="geetest_goto_content_tip"></div>
+                                                </div>
+                                                <div class="geetest_goto_cancel"></div>
+                                                <a class="geetest_goto_confirm"></a></div>
+                                        </div>
+                                        <div class="geetest_panel">
+                                            <div class="geetest_panel_ghost"></div>
+                                            <div class="geetest_panel_box">
+                                                <div class="geetest_other_offline geetest_panel_offline"></div>
+                                                <div class="geetest_panel_loading">
+                                                    <div class="geetest_panel_loading_icon"></div>
+                                                    <div class="geetest_panel_loading_content"></div>
+                                                </div>
+                                                <div class="geetest_panel_success geetest_success_animate">
+                                                    <div class="geetest_panel_success_box">
+                                                        <div class="geetest_panel_success_show">
+                                                            <div class="geetest_panel_success_pie"></div>
+                                                            <div class="geetest_panel_success_filter"></div>
+                                                            <div class="geetest_panel_success_mask"></div>
+                                                        </div>
+                                                        <div class="geetest_panel_success_correct">
+                                                            <div class="geetest_panel_success_icon"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="geetest_panel_success_title"></div>
+                                                </div>
+                                                <div class="geetest_panel_error">
+                                                    <div class="geetest_panel_error_icon"></div>
+                                                    <div class="geetest_panel_error_title"></div>
+                                                    <div class="geetest_panel_error_content"></div>
+                                                    <div class="geetest_panel_error_code"></div>
+                                                </div>
+                                                <div class="geetest_panel_footer">
+                                                    <div class="geetest_panel_footer_logo"></div>
+                                                    <div class="geetest_panel_footer_copyright"></div>
+                                                </div>
+                                                <div class="geetest_panel_next"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <input name="commit" value="注 册" class="btn btn-default btn btn-theme"
+                                       data-disable-with="注 册" type="submit">
+                            </form>
+                        </div>
+
+
+                        <div class="links-area text-center">
+                            <hr>
+                            <span class="new-registration-link"> 已经有帐号？</span><a
+                                href="{% url 'user:login' %}">登录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% include '_footer.html' %}
